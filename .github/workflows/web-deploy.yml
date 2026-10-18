@@ -1,0 +1,36 @@
+# Despliega la versión web (expo export) en Vercel cuando cambia la app en main.
+# Secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID y APP_DOTENV (mismas EXPO_PUBLIC_* que el APK).
+name: Web deploy
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: package-lock.json }
+      - name: Comprobar secretos
+        id: check
+        run: |
+          if [[ -z "${{ secrets.VERCEL_TOKEN }}" ]]; then echo "::notice::VERCEL_TOKEN no configurado; se omite el deploy."; echo "skip=true" >> "$GITHUB_OUTPUT"; fi
+      - if: steps.check.outputs.skip != 'true'
+        env: { APP_DOTENV: '${{ secrets.APP_DOTENV }}' }
+        run: printf '%s\n' "$APP_DOTENV" > .env
+      - if: steps.check.outputs.skip != 'true'
+        run: |
+          npm i -g vercel@latest
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}

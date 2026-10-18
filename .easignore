@@ -1,0 +1,22 @@
+# Si existe, EAS usa este fichero EN LUGAR de .gitignore: mantenlo sincronizado.
+# Diferencia: se sube .env (solo EXPO_PUBLIC_*) y google-services.json, necesarios para el APK.
+node_modules/
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+.kotlin/
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+.metro-health-check*
+npm-debug.*
+.DS_Store
+*.pem
+.env*.local
+*.tsbuildinfo
+/ios
+/android

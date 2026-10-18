@@ -1,25 +1,92 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Lukita",
+    "slug": "lukita",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "scheme": "lukita",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#F4F5FB",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.luiscruzga.lukita",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Lukita usa tu ubicación para mostrarte descuentos cerca de ti."
+      }
     },
     "android": {
+      "package": "com.luiscruzga.lukita",
+      "googleServicesFile": "./google-services.json",
+      "backgroundColor": "#F4F5FB",
+      "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#2B1FA8",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.REQUEST_INSTALL_PACKAGES"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/favicon.png",
+      "name": "Lukita · Tus descuentos, en un mapa",
+      "shortName": "Lukita",
+      "themeColor": "#2B1FA8",
+      "backgroundColor": "#F4F5FB"
+    },
+    "plugins": [
+      "expo-router",
+      "@clerk/expo",
+      "expo-secure-store",
+      "expo-web-browser",
+      "expo-image",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#F4F5FB",
+          "dark": { "image": "./assets/splash-icon.png", "backgroundColor": "#100E2E" }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#2B1FA8",
+          "defaultChannel": "default"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Lukita usa tu ubicación para mostrarte descuentos cerca de ti."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Lukita necesita acceder a tus fotos para cambiar tu avatar."
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {}
     }
   }
 }
